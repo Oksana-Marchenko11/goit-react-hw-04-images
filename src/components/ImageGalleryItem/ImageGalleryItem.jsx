@@ -1,41 +1,21 @@
-import Modal from 'components/Modal/Modal';
-import React, { useState } from 'react';
-import { ModalContext } from 'userContext';
+import PropTypes from 'prop-types';
 import {
   ImageGalleryItems,
   ImageGalleryItemImage,
 } from './ImageGalleryItem.styled';
-import PropTypes from 'prop-types';
 
-export const ImageGalleryItem = img => {
-  console.log(img);
-  const [showModal, setShowModal] = useState(false);
-  const clickImg = () => {
-    setShowModal(true);
-  };
-  const closeImg = () => {
-    setShowModal(false);
-  };
+export const ImageGalleryItem = ({ image, onClickImg }) => {
+  // console.log(image);
+  const large = image.largeImageURL;
+  const tags = image.tags;
   return (
-    <ModalContext.Provider value={closeImg}>
-      <ImageGalleryItems>
-        <ImageGalleryItemImage
-          key={img.image.id}
-          src={img.image.webformatURL}
-          alt={img.image.tags}
-          data-large-img={img.image.largeImageURL}
-          onClick={clickImg}
-        />
-        {showModal && (
-          <Modal
-            largeImageURL={img.image.largeImageURL}
-            tags={img.image.tags}
-            key={img.image.id}
-            onClose={closeImg}
-          />
-        )}
-      </ImageGalleryItems>
-    </ModalContext.Provider>
+    <ImageGalleryItems onClick={() => onClickImg({ large, tags })}>
+      <ImageGalleryItemImage
+        key={image.id}
+        src={image.webformatURL}
+        alt={image.tags}
+      />
+    </ImageGalleryItems>
   );
 };
 

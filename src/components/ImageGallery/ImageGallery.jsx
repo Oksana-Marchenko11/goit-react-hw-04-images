@@ -1,15 +1,14 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import { ImageGalleryItem } from '../ImageGalleryItem/ImageGalleryItem';
 import { ImageGalleryList } from './imageGallery.styled';
 
-export const ImageGallery = ({ data }) => {
-  console.log(data);
+export const ImageGallery = ({ data, onClickImg }) => {
+  // console.log(data);
   return (
     <ImageGalleryList>
-      {data.map(img => (
-        <ImageGalleryItem image={img} key={img.id} />
-      ))}
+      {data.map(img => {
+        return <ImageGalleryItem image={img} onClickImg={onClickImg} />;
+      })}
     </ImageGalleryList>
   );
 };

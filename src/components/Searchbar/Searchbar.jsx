@@ -1,7 +1,5 @@
-import React from 'react';
-import { useState, useEffect } from 'react';
-import { useUser } from '../../userContext';
 import PropTypes from 'prop-types';
+import { useState } from 'react';
 import {
   SearchbarDiv,
   SearchForm,
@@ -9,18 +7,18 @@ import {
   SearchFormInput,
 } from './Searchbar.styled';
 
-export const Searchbar = () => {
+export const Searchbar = ({ onSubmit }) => {
   const [searchValue, setsearchValue] = useState('');
 
-  const onSubmit = useUser();
+  // const onSubmit = useUser();
   const handleChange = async e => {
     setsearchValue(e.target.value);
   };
 
   const handleSubmit = e => {
     e.preventDefault();
-    console.log(searchValue);
-    console.log(onSubmit);
+    // console.log(searchValue);
+    // console.log(onSubmit);
     onSubmit(searchValue);
   };
   return (

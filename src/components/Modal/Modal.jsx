@@ -1,10 +1,9 @@
-import { useEffect } from 'react';
-import { useModal } from 'userContext';
 import PropTypes from 'prop-types';
+import { useEffect } from 'react';
 import { Overlay, ModalDiv } from './Modal.styled';
 
-const Modal = (largeImageURL, tags) => {
-  console.log(largeImageURL);
+export const Modal = ({ item, onClose }) => {
+  // console.log(item);
   useEffect(() => {
     window.addEventListener('keydown', handleKeyDown);
     document.body.style.overflow = 'hidden';
@@ -14,7 +13,6 @@ const Modal = (largeImageURL, tags) => {
   //   window.removeEventListener('keydown', handleKeyDown);
   //   document.body.style.overflow = 'visible';
   // });
-  const onClose = useModal();
 
   const handleKeyDown = event => {
     if (event.code === 'Escape') {
@@ -27,18 +25,20 @@ const Modal = (largeImageURL, tags) => {
       onClose();
     }
   };
+
   return (
     <Overlay onClick={handleBackdrop}>
       <ModalDiv>
-        <img src={largeImageURL.largeImageURL} alt={tags} />
+        <img src={item.large} alt={item.tags} />
       </ModalDiv>
     </Overlay>
   );
 };
+
 Modal.propTypes = {
-  largeImageURL: PropTypes.string.isRequired,
-  tags: PropTypes.string.isRequired,
+  item: PropTypes.objectOf({
+    large: PropTypes.string.isRequired,
+    tags: PropTypes.string.isRequired,
+  }),
   onClose: PropTypes.func.isRequired,
 };
-
-export default Modal;
