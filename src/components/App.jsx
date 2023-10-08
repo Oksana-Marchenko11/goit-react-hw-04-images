@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { Searchbar } from './Searchbar/Searchbar';
 import { getItems } from 'api/api';
 import { ImageGallery } from './ImageGallery/ImageGallery';
-// import { UserContext } from '../userContext';
 import { Loader } from './Loader/Loader';
 import { Button } from './Button/Button';
 import { AppDiv } from './App.styled';
@@ -29,13 +28,11 @@ export const App = () => {
   useEffect(() => {
     if (searchName === '') return;
     setIsLoading(true);
-    getItems(searchName, currentPage).then(
-      response =>
-        // response => console.log(response.data.hits)
-        setImages(prev => [...prev, ...response.data.hits])
-      // setTotalPages(Math.ceil(response.data.total / result.config.params.per_page));
+
+    getItems(searchName, currentPage).then(response =>
+      setImages(prev => [...prev, ...response.data.hits])
     );
-    // setImages(...images, ...response.data.hits);
+
     // setTotalPages(Math.ceil(response.data.total / result.config.params.per_page));
     setIsLoading(false);
   }, [searchName, currentPage]);
