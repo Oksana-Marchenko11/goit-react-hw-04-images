@@ -4,10 +4,11 @@ import { ImageGalleryItem } from '../ImageGalleryItem/ImageGalleryItem';
 import { ImageGalleryList } from './imageGallery.styled';
 
 export const ImageGallery = ({ data }) => {
+  console.log(data);
   return (
     <ImageGalleryList>
-      {data.map(image => (
-        <ImageGalleryItem image={image} key={image.id} />
+      {data.map(img => (
+        <ImageGalleryItem image={img} key={img.id} />
       ))}
     </ImageGalleryList>
   );

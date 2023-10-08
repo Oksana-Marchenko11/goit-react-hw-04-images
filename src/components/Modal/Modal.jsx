@@ -1,40 +1,40 @@
-import { Component } from 'react';
+import { useEffect } from 'react';
+import { useModal } from 'userContext';
 import PropTypes from 'prop-types';
 import { Overlay, ModalDiv } from './Modal.styled';
 
-class Modal extends Component {
-  componentDidMount() {
-    window.addEventListener('keydown', this.handleKeyDown);
+const Modal = (largeImageURL, tags) => {
+  console.log(largeImageURL);
+  useEffect(() => {
+    window.addEventListener('keydown', handleKeyDown);
     document.body.style.overflow = 'hidden';
-  }
+  });
 
-  componentWillUnmount() {
-    window.removeEventListener('keydown', this.handleKeyDown);
-    document.body.style.overflow = 'visible';
-  }
+  // useEffect(() => {
+  //   window.removeEventListener('keydown', handleKeyDown);
+  //   document.body.style.overflow = 'visible';
+  // });
+  const onClose = useModal();
 
-  handleKeyDown = event => {
+  const handleKeyDown = event => {
     if (event.code === 'Escape') {
-      this.props.onClose();
+      onClose();
     }
   };
 
-  handleBackdrop = event => {
+  const handleBackdrop = event => {
     if (event.currentTarget === event.target) {
-      this.props.onClose();
+      onClose();
     }
   };
-  render() {
-    const { largeImageURL, tags } = this.props;
-    return (
-      <Overlay onClick={this.handleBackdrop}>
-        <ModalDiv>
-          <img src={largeImageURL} alt={tags} />
-        </ModalDiv>
-      </Overlay>
-    );
-  }
-}
+  return (
+    <Overlay onClick={handleBackdrop}>
+      <ModalDiv>
+        <img src={largeImageURL.largeImageURL} alt={tags} />
+      </ModalDiv>
+    </Overlay>
+  );
+};
 Modal.propTypes = {
   largeImageURL: PropTypes.string.isRequired,
   tags: PropTypes.string.isRequired,

@@ -1,44 +1,44 @@
 import Modal from 'components/Modal/Modal';
-import React, { Component } from 'react';
+import React, { useState } from 'react';
+import { ModalContext } from 'userContext';
 import {
   ImageGalleryItems,
   ImageGalleryItemImage,
 } from './ImageGalleryItem.styled';
 import PropTypes from 'prop-types';
 
-export class ImageGalleryItem extends Component {
-  state = {
-    showModal: false,
+export const ImageGalleryItem = img => {
+  console.log(img);
+  const [showModal, setShowModal] = useState(false);
+  const clickImg = () => {
+    setShowModal(true);
   };
-  clickImg = () => {
-    this.setState({ showModal: true });
+  const closeImg = () => {
+    setShowModal(false);
   };
-  closeImg = () => {
-    this.setState({ showModal: false });
-  };
-  render() {
-    const { image } = this.props;
-    const { showModal } = this.state;
-    return (
+  return (
+    <ModalContext.Provider value={closeImg}>
       <ImageGalleryItems>
         <ImageGalleryItemImage
-          key={image.id}
-          src={image.webformatURL}
-          alt={image.tags}
-          data-large-img={image.largeImageURL}
-          onClick={this.clickImg}
+          key={img.image.id}
+          src={img.image.webformatURL}
+          alt={img.image.tags}
+          data-large-img={img.image.largeImageURL}
+          onClick={clickImg}
         />
         {showModal && (
           <Modal
-            largeImageURL={image.largeImageURL}
-            tags={image.tags}
-            onClose={this.closeImg}
+            largeImageURL={img.image.largeImageURL}
+            tags={img.image.tags}
+            key={img.image.id}
+            onClose={closeImg}
           />
         )}
       </ImageGalleryItems>
-    );
-  }
-}
+    </ModalContext.Provider>
+  );
+};
+
 ImageGalleryItem.propTypes = {
   images: PropTypes.arrayOf(
     PropTypes.shape({

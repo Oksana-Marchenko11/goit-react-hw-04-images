@@ -2,7 +2,7 @@ import axios from 'axios';
 
 axios.defaults.baseURL = 'https://pixabay.com/api/';
 
-export const getItems = async ({ searchName, currentPage }) => {
+export const getItems = async (searchName, currentPage) => {
   const response = await axios.get(axios.defaults.baseURL, {
     params: {
       q: searchName,
@@ -11,5 +11,6 @@ export const getItems = async ({ searchName, currentPage }) => {
       key: '38733700-96318c553c84bf90463eb3752',
     },
   });
+  console.log(response);
   return response;
 };
