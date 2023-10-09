@@ -3,22 +3,21 @@ import { useEffect } from 'react';
 import { Overlay, ModalDiv } from './Modal.styled';
 
 export const Modal = ({ item, onClose }) => {
-  // console.log(item);
   useEffect(() => {
+    const handleKeyDown = event => {
+      if (event.code === 'Escape') {
+        onClose();
+      }
+    };
+
     window.addEventListener('keydown', handleKeyDown);
     document.body.style.overflow = 'hidden';
-  });
 
-  // useEffect(() => {
-  //   window.removeEventListener('keydown', handleKeyDown);
-  //   document.body.style.overflow = 'visible';
-  // });
-
-  const handleKeyDown = event => {
-    if (event.code === 'Escape') {
-      onClose();
-    }
-  };
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = 'visible';
+    };
+  }, [onClose]);
 
   const handleBackdrop = event => {
     if (event.currentTarget === event.target) {
@@ -36,9 +35,6 @@ export const Modal = ({ item, onClose }) => {
 };
 
 Modal.propTypes = {
-  item: PropTypes.objectOf({
-    large: PropTypes.string.isRequired,
-    tags: PropTypes.string.isRequired,
-  }),
+  item: PropTypes.object,
   onClose: PropTypes.func.isRequired,
 };
