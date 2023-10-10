@@ -12,7 +12,7 @@ export const App = () => {
   const [images, setImages] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
-  const [totalPages] = useState(0); //, setTotalPages
+  const [totalPages, setTotalPages] = useState(0);
   const [showModal, setShowModal] = useState(false);
 
   const handleSubmits = searchValue => {
@@ -29,12 +29,16 @@ export const App = () => {
     if (searchName === '') return;
     setIsLoading(true);
 
-    getItems(searchName, currentPage).then(response =>
-      setImages(prev => [...prev, ...response.data.hits])
-    );
-
-    // setTotalPages(Math.ceil(response.data.total / result.config.params.per_page));
-    setIsLoading(false);
+    getItems(searchName, currentPage)
+      .then(response => {
+        setIsLoading(true);
+        setImages(prev => [...prev, ...response.data.hits]);
+        setTotalPages(
+          Math.ceil(response.data.total / response.config.params.per_page)
+        );
+      })
+      .catch(() => console.log('error'))
+      .finally(() => setIsLoading(false));
   }, [searchName, currentPage]);
 
   const onClickImg = item => {
